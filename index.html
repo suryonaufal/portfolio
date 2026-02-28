@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Naufal Suryo Saputro — Engineering Physics Portfolio</title>
+  <meta name="description" content="Engineering Physics graduate from UGM specializing in Instrumentation & Control, Applied ML, and Energy Systems."/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ============================================================
+       THEME TRANSITION — smooth for all color changes
+       ============================================================ */
+    *, *::before, *::after {
+      transition-property: background-color, border-color, color, box-shadow, opacity;
+      transition-duration: 0.35s;
+      transition-timing-function: ease;
+    }
+    /* Override for things that need their own transitions */
+    .role-btn, .skill-chip, .project-card, .btn, .social-item,
+    .edu-card, .cert-card, .exp-item, .hero-tagline, .reveal {
+      transition: all 0.35s ease;
+    }
+
+    /* ============================================================
+       DARK MODE (default)
+       ============================================================ */
+    :root {
+      --bg:     #0d0f12;
+      --bg2:    #13161b;
+      --bg3:    #1a1e25;
+      --border: rgba(255,255,255,0.07);
+      --text:   #e8eaed;
+      --muted:  #6b7280;
+      --card:   #161920;
+      --shadow: rgba(0,0,0,0.4);
+      --nav-bg: rgba(13,15,18,0.88);
+      --accent:      #3b82f6;
+      --accent-dim:  rgba(59,130,246,0.10);
+      --accent-mid:  rgba(59,130,246,0.30);
+      --accent-glow: rgba(59,130,246,0.06);
+    }
+
+    /* ============================================================
+       LIGHT MODE
+       ============================================================ */
+    body.light {
+      --bg:     #f5f6f8;
+      --bg2:    #eef0f3;
+      --bg3:    #e4e7ec;
+      --border: rgba(0,0,0,0.08);
+      --text:   #0f1117;
+      --muted:  #64748b;
+      --card:   #ffffff;
+      --shadow: rgba(0,0,0,0.08);
+      --nav-bg: rgba(245,246,248,0.92);
+    }
+    /* Light mode accent per role */
+    body.light.role-instrumentation {
+      --accent:      #1d6ef5;
+      --accent-dim:  rgba(29,110,245,0.08);
+      --accent-mid:  rgba(29,110,245,0.22);
+      --accent-glow: rgba(29,110,245,0.05);
+    }
+    body.light.role-ml {
+      --accent:      #059669;
+      --accent-dim:  rgba(5,150,105,0.08);
+      --accent-mid:  rgba(5,150,105,0.22);
+      --accent-glow: rgba(5,150,105,0.05);
+    }
+    body.light.role-energy {
+      --accent:      #d97706;
+      --accent-dim:  rgba(217,119,6,0.08);
+      --accent-mid:  rgba(217,119,6,0.22);
+      --accent-glow: rgba(217,119,6,0.05);
+    }
+
+    /* ============================================================
+       ROLE-BASED CSS VARIABLES (dark, default)
+       ============================================================ */
+    body.role-instrumentation {
+      --accent:      #3b82f6;
+      --accent-dim:  rgba(59,130,246,0.10);
+      --accent-mid:  rgba(59,130,246,0.30);
+      --accent-glow: rgba(59,130,246,0.06);
+    }
+    body.role-ml {
+      --accent:      #10b981;
+      --accent-dim:  rgba(16,185,129,0.10);
+      --accent-mid:  rgba(16,185,129,0.30);
+      --accent-glow: rgba(16,185,129,0.06);
+    }
+    body.role-energy {
+      --accent:      #f59e0b;
+      --accent-dim:  rgba(245,158,11,0.10);
+      --accent-mid:  rgba(245,158,11,0.30);
+      --accent-glow: rgba(245,158,11,0.06);
+    }
+
+    /* ============================================================
+       RESET & BASE
+       ============================================================ */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.4;
+    }
+
+    /* ============================================================
+       NAV
+       ============================================================ */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 60px;
+      background: var(--nav-bg);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.05em;
+      transition: color 0.4s;
+    }
+    .nav-logo span { color: var(--muted); }
+    .nav-links { display:flex; gap:32px; list-style:none; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ============================================================
+       THEME TOGGLE BUTTON
+       ============================================================ */
+    .theme-toggle {
+      position: fixed; top: 20px; right: 24px; z-index: 300;
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg2);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px var(--shadow);
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-mid);
+      transform: scale(1.08);
+    }
+    .theme-toggle svg {
+      width: 20px; height: 20px;
+      transition: transform 0.5s ease, opacity 0.3s ease;
+    }
+    /* Sun icon — shown in dark mode */
+    .icon-sun { color: #f59e0b; }
+    /* Moon icon — shown in light mode */
+    .icon-moon { color: #6b7280; position: absolute; }
+
+    body.light .icon-sun  { opacity: 0; transform: rotate(90deg) scale(0.5); }
+    body.light .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+    body:not(.light) .icon-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+    body:not(.light) .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+
+    /* ============================================================
+       LIGHT MODE SPECIFIC OVERRIDES
+       ============================================================ */
+    body.light body::before { opacity: 0.15; }
+
+    /* Hero grid overlay — lighter in light mode */
+    body.light #hero::after {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+    }
+
+    /* Nav links in light mode */
+    body.light .nav-links a { color: var(--muted); }
+    body.light .nav-links a:hover { color: var(--text); }
+
+    /* Buttons */
+    body.light .btn-ghost { color: var(--muted); }
+    body.light .btn-ghost:hover { color: var(--accent); }
+
+    /* Role switcher in light */
+    body.light .role-btn { background: var(--card); color: var(--muted); }
+
+    /* Status badge green stays in both modes */
+    .status-badge { color: #059669; }
+    body:not(.light) .status-badge { color: #10b981; }
+    .status-dot { background: #059669; }
+    body:not(.light) .status-dot { background: #10b981; }
+
+    /* Project thumb placeholder */
+    body.light .project-thumb { background: var(--bg3); color: var(--muted); }
+
+    /* Photo placeholder */
+    body.light .photo-placeholder { background: var(--bg3); }
+
+    /* Cards get subtle shadow in light */
+    body.light .project-card,
+    body.light .edu-card,
+    body.light .cert-card,
+    body.light .stat-box,
+    body.light .social-item {
+      box-shadow: 0 2px 12px var(--shadow);
+    }
+
+    /* Footer */
+    body.light footer { background: var(--bg2); }
+
+    /* ============================================================
+       ROLE SWITCHER
+       ============================================================ */
+    .role-switcher {
+      position: fixed; top: 80px; right: 24px;
+      z-index: 190;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .role-switcher-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; color: var(--muted);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      text-align: right; margin-bottom: 4px;
+    }
+    .role-btn {
+      display: flex; align-items: center; gap: 10px; justify-content: flex-end;
+      padding: 10px 16px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--bg2);
+      cursor: pointer;
+      font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 600;
+      color: var(--muted);
+      transition: all 0.25s; white-space: nowrap; user-select: none;
+    }
+    .role-btn .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: currentColor; opacity: 0.4;
+      transition: opacity 0.25s; flex-shrink: 0;
+    }
+    .role-btn[data-role="instrumentation"] { --btn-color: #3b82f6; }
+    .role-btn[data-role="ml"]              { --btn-color: #10b981; }
+    .role-btn[data-role="energy"]          { --btn-color: #f59e0b; }
+    .role-btn:hover, .role-btn.active {
+      color: var(--btn-color);
+      border-color: var(--btn-color);
+      background: color-mix(in srgb, var(--btn-color) 8%, var(--bg2));
+    }
+    .role-btn.active .dot { opacity: 1; }
+    .role-btn.active { box-shadow: 0 0 16px color-mix(in srgb, var(--btn-color) 20%, transparent); }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 60px 80px;
+      position: relative; overflow: hidden;
+    }
+    #hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+      pointer-events: none;
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      top: 50%; left: 30%; transform: translate(-50%,-50%);
+      pointer-events: none; transition: background 0.6s; z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 1000px; margin: 0 auto; width: 100%; }
+
+    .hero-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem; color: var(--accent);
+      letter-spacing: 0.12em; margin-bottom: 20px;
+      transition: color 0.4s;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .hero-mono::before {
+      content: ''; display: inline-block; width: 32px; height: 1px;
+      background: var(--accent); transition: background 0.4s;
+    }
+    .hero-name {
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.03em; margin-bottom: 24px;
+    }
+    .hero-name .highlight { color: var(--accent); transition: color 0.4s; }
+
+    .hero-tagline-wrap { min-height: 88px; margin-bottom: 36px; }
+    .hero-tagline {
+      display: none; font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      color: var(--muted); max-width: 620px;
+      line-height: 1.7; animation: fadeSlide 0.5s ease both;
+    }
+    .hero-tagline.visible { display: block; }
+    @keyframes fadeSlide {
+      from { opacity:0; transform: translateY(12px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .hero-pills { display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 48px; }
+    .pill {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      padding: 6px 14px; border-radius: 4px;
+      border: 1px solid var(--border); color: var(--muted); background: var(--bg2);
+      letter-spacing: 0.06em; transition: all 0.25s;
+    }
+    .pill.role-highlight {
+      border-color: var(--accent-mid); color: var(--accent); background: var(--accent-dim);
+    }
+
+    .hero-cta { display:flex; gap:16px; flex-wrap:wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px; border-radius: 6px;
+      font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em; border: none;
+    }
+    .btn-primary {
+      background: var(--accent); color: var(--bg);
+      transition: background 0.4s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px var(--accent-mid); }
+    .btn-ghost {
+      background: transparent; border: 1px solid var(--border); color: var(--muted);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: #10b981; margin-bottom: 32px;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; background: #10b981;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+      50%      { box-shadow: 0 0 0 5px rgba(16,185,129,0); }
+    }
+
+    /* ============================================================
+       SECTION BASE
+       ============================================================ */
+    section { padding: 100px 60px; position: relative; z-index: 1; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .sec-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 56px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+    }
+    .sec-num {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+      color: var(--accent); letter-spacing: 0.15em; margin-bottom: 8px;
+      transition: color 0.4s;
+    }
+    .sec-title { font-size: clamp(1.6rem,3vw,2.2rem); font-weight: 700; letter-spacing: -0.02em; }
+    .sec-note {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted);
+    }
+    .sec-note span { color: var(--accent); transition: color 0.4s; }
+
+    /* ============================================================
+       ABOUT
+       ============================================================ */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+
+    /* ✏️ PHOTO: Ganti .photo-placeholder dengan <img> tag setelah kamu punya foto */
+    .photo-placeholder {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--bg3);
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--muted); font-size: 0.78rem; gap: 10px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Cara pakai foto:
+       <img src="./foto-naufal.jpg" alt="Naufal Suryo Saputro"
+            style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;"/>
+    */
+
+    .about-right { display: flex; flex-direction: column; gap: 24px; }
+    .about-text { color: var(--muted); line-height: 1.8; font-size: 0.96rem; }
+    .about-text p + p { margin-top: 14px; }
+    .about-text strong { color: var(--text); }
+
+    .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .stat-box {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 8px; padding: 18px;
+    }
+    .stat-num {
+      font-size: 1.8rem; font-weight: 800; color: var(--accent);
+      transition: color 0.4s; font-family: 'JetBrains Mono', monospace;
+      line-height: 1; margin-bottom: 6px;
+    }
+    .stat-label { font-size: 0.72rem; color: var(--muted); line-height: 1.3; }
+
+    /* ============================================================
+       EDUCATION
+       ============================================================ */
+    #education { background: var(--bg); }
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 16px; }
+    .edu-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 10px; padding: 28px;
+      transition: border-color 0.25s;
+    }
+    .edu-card:hover { border-color: var(--accent-mid); }
+    .edu-year {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      color: var(--accent); transition: color 0.4s; margin-bottom: 10px;
+    }
+    .edu-school { font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; }
+    .edu-major { color: var(--muted); font-size: 0.86rem; line-height: 1.5; }
+    .edu-award {
+      display: inline-block; margin-top: 10px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      padding: 3px 9px; border-radius: 3px;
+      background: var(--accent-dim); color: var(--accent);
+      border: 1px solid var(--accent-mid); transition: all 0.4s;
+    }
+
+    /* ============================================================
+       SKILLS
+       ============================================================ */
+    #skills { background: var(--bg2); }
+    .skills-groups { display: flex; flex-direction: column; gap: 36px; }
+    .skill-group-title {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); transition: color 0.4s; margin-bottom: 14px;
+    }
+    .skills-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+    .skill-chip {
+      padding: 8px 16px; border-radius: 5px;
+      border: 1px solid var(--border); background: var(--bg3);
+      font-size: 0.83rem; font-weight: 500; color: var(--muted);
+      transition: all 0.3s; cursor: default;
+    }
+    .skill-chip.role-highlight {
+      border-color: var(--accent); color: var(--accent);
+      background: var(--accent-dim); box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .skill-chip.role-dimmed { opacity: 0.28; }
+
+    /* ============================================================
+       EXPERIENCE
+       ============================================================ */
+    #experience { background: var(--bg); }
+    .exp-timeline { display: flex; flex-direction: column; }
+    .exp-item {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 40px; padding: 36px 0; border-bottom: 1px solid var(--border);
+    }
+    .exp-item:first-child { border-top: 1px solid var(--border); }
+    .exp-period {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      color: var(--muted); margin-bottom: 6px; padding-top: 4px;
+    }
+    .exp-company {
+      font-size: 0.75rem; font-weight: 600; color: var(--accent);
+      transition: color 0.4s; text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    .exp-role { font-size: 1.08rem; font-weight: 700; margin-bottom: 12px; margin-top: 4px; }
+    .exp-bullets { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .exp-bullet {
+      display: flex; gap: 10px;
+      color: var(--muted); font-size: 0.86rem; line-height: 1.6;
+    }
+    .exp-bullet::before {
+      content: '→'; color: var(--accent); transition: color 0.4s;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    /* ============================================================
+       PROJECTS
+       ============================================================ */
+    #projects { background: var(--bg2); }
+    .project-tabs { display: flex; gap: 8px; margin-bottom: 36px; }
+    .project-tab {
+      padding: 7px 16px; border-radius: 5px;
+      border: 1px solid var(--border); background: transparent;
+      font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 600;
+      color: var(--muted); cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .project-tab.active, .project-tab:hover {
+      border-color: var(--accent); color: var(--accent); background: var(--accent-dim);
+    }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 20px;
+    }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 28px;
+      transition: all 0.3s;
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height: 2px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s, background 0.4s;
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+    .project-card:hover {
+      border-color: var(--accent-mid);
+      transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .project-card.hidden { display: none; }
+    .project-card.role-featured {
+      border-color: var(--accent-mid);
+      background: color-mix(in srgb, var(--accent) 4%, var(--card));
+    }
+
+    /* ✏️ THUMBNAIL: Uncomment dan isi src setelah kamu punya gambar/screenshot */
+    .project-thumb {
+      /* Aktifkan ini dan ganti URL setelah ada screenshot:
+         background-image: url('./img/project-nama.jpg');
+         background-size: cover; background-position: center;
+      */
+      height: 160px; background: var(--bg3);
+      border-radius: 6px; border: 1px dashed var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem; color: var(--muted);
+      /* Hapus display:flex dan tiga baris di atas setelah ada gambar */
+    }
+
+    .project-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+    .badge {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+      padding: 3px 9px; border-radius: 3px; font-weight: 500; letter-spacing: 0.06em;
+    }
+    .badge-instrumentation { background: rgba(59,130,246,0.12);  color: #3b82f6; }
+    .badge-ml             { background: rgba(16,185,129,0.12);  color: #10b981; }
+    .badge-energy         { background: rgba(245,158,11,0.12);  color: #f59e0b; }
+
+    .project-title { font-size: 1.02rem; font-weight: 700; line-height: 1.3; }
+    .project-desc { color: var(--muted); font-size: 0.86rem; line-height: 1.65; flex: 1; }
+    .project-metric {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      color: var(--accent); transition: color 0.4s;
+      padding: 6px 12px; border-radius: 4px;
+      background: var(--accent-dim); border: 1px solid var(--accent-mid);
+      display: inline-block;
+    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      padding: 3px 8px; border-radius: 3px;
+      background: var(--bg3); border: 1px solid var(--border); color: var(--muted);
+    }
+    .project-link {
+      font-size: 0.8rem; font-weight: 600; color: var(--accent);
+      transition: color 0.4s; display: inline-flex; align-items: center; gap: 4px;
+      margin-top: auto;
+    }
+    .project-link:hover { opacity: 0.7; }
+    .project-link.unavailable { color: var(--muted); cursor: default; pointer-events: none; }
+
+    /* ============================================================
+       CERTIFICATIONS
+       ============================================================ */
+    #certifications { background: var(--bg); }
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 14px; }
+    .cert-card {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px 22px;
+      display: flex; gap: 14px; align-items: flex-start;
+      transition: border-color 0.25s;
+    }
+    .cert-card:hover { border-color: var(--accent-mid); }
+    .cert-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--accent-dim); border: 1px solid var(--accent-mid);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 1rem; transition: background 0.4s, border-color 0.4s;
+    }
+    .cert-name { font-weight: 600; font-size: 0.88rem; margin-bottom: 3px; }
+    .cert-issuer { font-size: 0.76rem; color: var(--muted); }
+    .cert-year {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem;
+      color: var(--accent); transition: color 0.4s; margin-top: 4px;
+    }
+
+    /* ============================================================
+       CONTACT
+       ============================================================ */
+    #contact { background: var(--bg2); }
+    .contact-wrap {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+    }
+    .contact-headline {
+      font-size: clamp(1.8rem,3vw,2.8rem); font-weight: 800;
+      line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em;
+    }
+    .contact-headline .acc { color: var(--accent); transition: color 0.4s; }
+    .contact-sub { color: var(--muted); margin-bottom: 32px; line-height: 1.7; font-size: 0.95rem; }
+    .contact-email {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.95rem;
+      color: var(--text); border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px; transition: color 0.2s, border-color 0.4s;
+      display: inline-block;
+    }
+    .contact-email:hover { color: var(--accent); }
+    .contact-phone {
+      display: block; margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--muted);
+    }
+
+    .social-list { display: flex; flex-direction: column; gap: 12px; }
+    .social-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px; border: 1px solid var(--border); border-radius: 8px;
+      background: var(--bg3); transition: all 0.2s; color: var(--text);
+    }
+    .social-item:hover { border-color: var(--accent); background: var(--accent-dim); }
+    .social-name { font-weight: 600; font-size: 0.9rem; }
+    .social-handle { font-family: 'JetBrains Mono', monospace; font-size: 0.73rem; color: var(--muted); }
+    .social-arrow { color: var(--muted); transition: color 0.2s, transform 0.2s; }
+    .social-item:hover .social-arrow { color: var(--accent); transform: translateX(3px); }
+
+    footer {
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 24px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-mono { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+    .footer-accent { color: var(--accent); transition: color 0.4s; }
+
+    /* ============================================================
+       ANIMATIONS & REVEAL
+       ============================================================ */
+    .reveal { opacity:0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform: translateY(0); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      section, #hero { padding-left: 20px; padding-right: 20px; }
+      .role-switcher { top: auto; bottom: 20px; right: 12px; left: 12px; flex-direction: row; flex-wrap: wrap; }
+      .role-btn { flex: 1; justify-content: center; font-size: 0.72rem; padding: 8px 10px; }
+      .hero-name { font-size: 2.8rem; }
+      .about-grid, .contact-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .stats-row { grid-template-columns: repeat(2,1fr); }
+      .exp-item { grid-template-columns: 1fr; gap: 8px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
+    }
+  </style>
+</head>
+<body class="role-instrumentation">
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-logo">./&nbsp;<span>naufal_suryo</span></span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- THEME TOGGLE -->
+  <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode" aria-label="Toggle theme">
+    <!-- Sun icon (shown in dark mode) -->
+    <svg class="icon-sun" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    <!-- Moon icon (shown in light mode) -->
+    <svg class="icon-moon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
+  <!-- ROLE SWITCHER -->
+  <div class="role-switcher">
+    <div class="role-switcher-label">View as →</div>
+    <button class="role-btn active" data-role="instrumentation">Instrumentation & Control <div class="dot"></div></button>
+    <button class="role-btn" data-role="ml">Applied ML <div class="dot"></div></button>
+    <button class="role-btn" data-role="energy">Energy Systems <div class="dot"></div></button>
+  </div>
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section id="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+
+      <div class="status-badge">
+        <div class="status-dot"></div>
+        Open to opportunities · Jakarta, Indonesia
+      </div>
+
+      <div class="hero-mono">Engineering Physics · Universitas Gadjah Mada · 2026</div>
+
+      <h1 class="hero-name">
+        Naufal Suryo<br/>
+        <span class="highlight">Saputro</span>
+      </h1>
+
+      <div class="hero-tagline-wrap">
+        <p class="hero-tagline visible" data-role="instrumentation">
+          Instrumentation & Control engineer with hands-on experience in industrial
+          process systems, P&ID development, HAZOP analysis, Safety Instrumented Systems,
+          and IoT-based field monitoring — bridging physical measurement with control system design.
+        </p>
+        <p class="hero-tagline" data-role="ml">
+          Applied ML engineer combining deep learning, signal processing, and domain physics
+          knowledge — from 1D-ResNet crystal classification (88.4% accuracy on 127K+ spectra)
+          to soft sensor development and ensemble regression for industrial process prediction.
+        </p>
+        <p class="hero-tagline" data-role="energy">
+          Energy systems engineer with field experience in RDF plant energy auditing,
+          solar PV aerator design (3.2 kWp, 98.3% autonomy), and computational modeling
+          for renewable energy performance optimization and efficiency analysis.
+        </p>
+      </div>
+
+      <div class="hero-pills">
+        <span class="pill" data-roles="instrumentation,ml,energy">Engineering Physics, UGM</span>
+        <span class="pill" data-roles="instrumentation">Instrumentation & Control</span>
+        <span class="pill" data-roles="instrumentation">P&ID · HAZOP · SIS · IEC 61511</span>
+        <span class="pill" data-roles="ml">Applied Machine Learning</span>
+        <span class="pill" data-roles="ml">1D-ResNet · AdaBoost · TensorFlow</span>
+        <span class="pill" data-roles="energy">Energy Systems</span>
+        <span class="pill" data-roles="energy">Solar PV · Energy Audit · ISO 50001</span>
+        <span class="pill" data-roles="instrumentation,ml">Signal Processing · IoT</span>
+        <span class="pill" data-roles="energy,ml">Computational Modeling · Python</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        <!--
+          ✏️ CV DOWNLOAD: Letakkan file CV PDF kamu di folder yang sama,
+          lalu uncomment dan ganti href di bawah ini:
+          <a href="./Naufal-Suryo-CV.pdf" class="btn btn-ghost" download>Download CV</a>
+        -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ABOUT
+       ============================================================ -->
+  <section id="about">
+    <div class="section-inner reveal">
+      <div class="sec-head">
+        <div><p class="sec-num">01 — ABOUT</p><h2 class="sec-title">About Me</h2></div>
+      </div>
+      <div class="about-grid">
+
+        <!-- ✏️ PHOTO: Ganti div ini dengan <img> tag setelah punya foto
+             Contoh:
+             <img src="./foto-naufal.jpg" alt="Naufal Suryo Saputro"
+                  style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;"/>
+        -->
+        <div class="photo-placeholder">
+          <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" opacity="0.3">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          ✏️ Place your photo here<br/>
+          <span style="font-size:0.62rem;opacity:0.5">Replace with &lt;img&gt; tag</span>
+        </div>
+
+        <div class="about-right">
+          <div class="about-text">
+            <p>
+              I'm an Engineering Physics graduate from <strong>Universitas Gadjah Mada</strong>
+              with a strong foundation in physical measurement, control systems, and computational
+              modeling. My work sits at the intersection of <strong>instrumentation engineering,
+              applied machine learning, and energy systems</strong> — domains that naturally
+              overlap in modern industrial environments.
+            </p>
+            <p>
+              Over the course of my studies, I've worked on end-to-end engineering projects
+              ranging from industrial instrumentation design (P&ID, HAZOP, SIS per IEC 61511)
+              to deep learning pipelines processing 127,000+ data points, to solar PV field
+              commissioning with live IoT monitoring. I bring both the theoretical rigor of
+              physics and the practical mindset of an engineer.
+            </p>
+            <p>
+              I'm particularly drawn to roles where <strong>data and physical systems converge</strong>
+              — whether that's a smart sensor network, a predictive maintenance model, or an
+              energy optimization framework. I work best in cross-functional teams where
+              technical depth matters.
+            </p>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-box">
+              <div class="stat-num">3+</div>
+              <div class="stat-label">Years research & industry projects</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">127K+</div>
+              <div class="stat-label">XRD spectra classified (ML thesis)</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">98.3%</div>
+              <div class="stat-label">System autonomy — solar PV project</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">3.04</div>
+              <div class="stat-label">GPA / 4.00 · Very Satisfactory</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EDUCATION
+       ============================================================ -->
+  <section id="education">
+    <div class="section-inner reveal">
+      <div class="sec-head">
+        <div><p class="sec-num">02 — EDUCATION</p><h2 class="sec-title">Education</h2></div>
+      </div>
+      <div class="edu-grid">
+
+        <div class="edu-card">
+          <div class="edu-year">2021 — 2026</div>
+          <div class="edu-school">Universitas Gadjah Mada</div>
+          <div class="edu-major">
+            Bachelor of Engineering in Engineering Physics<br/>
+            GPA: 3.04 / 4.00 · Graduation Predicate: Very Satisfactory<br/><br/>
+            <em style="font-size:0.82rem;">Relevant: Automation System Design, Control Engineering, PLC,
+            System Dynamics, Sensor Technology, Instrumentation Safety Systems,
+            Signal Processing, Machine Learning, Actuator Technology</em>
+          </div>
+          <span class="edu-award">🎓 Thesis: 1D-ResNet Crystal Classifier · 88.4% Accuracy</span>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-year">Jul – Aug 2024</div>
+          <div class="edu-school">KKN-PPM UGM — Jeneponto</div>
+          <div class="edu-major">
+            Community Development Program<br/>
+            Sub-unit Coordinator · 8-member multidisciplinary team<br/>
+            Solar street lighting, micro-hydro feasibility, IoT education for elementary students
+          </div>
+        </div>
+
+        <div class="edu-card">
+          <div class="edu-year">2019</div>
+          <div class="edu-school">High School Achievements</div>
+          <div class="edu-major">
+            4th Best Speaker & 4th Best Team — Central Jakarta LDBI (Indonesian Debate Championship)<br/>
+            3rd Place — High School Book Review Competition, Central Jakarta Education Office
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SKILLS
+       ============================================================ -->
+  <section id="skills">
+    <div class="section-inner reveal">
+      <div class="sec-head">
+        <div><p class="sec-num">03 — SKILLS</p><h2 class="sec-title">Technical Skills</h2></div>
+        <div class="sec-note">Skills relevant to <span id="activeRoleLabel">Instrumentation & Control</span> are highlighted</div>
+      </div>
+
+      <div class="skills-groups">
+
+        <div>
+          <p class="skill-group-title">Instrumentation & Field</p>
+          <div class="skills-wrap">
+            <div class="skill-chip" data-roles="instrumentation">Pressure Instrumentation (DP/Gauge/Absolute)</div>
+            <div class="skill-chip" data-roles="instrumentation">Temperature (RTD, Thermocouple)</div>
+            <div class="skill-chip" data-roles="instrumentation">Flow (Orifice, Vortex, Magnetic)</div>
+            <div class="skill-chip" data-roles="instrumentation">Level (Radar, Ultrasonic, Displacer)</div>
+            <div class="skill-chip" data-roles="instrumentation">Control Valve Sizing (ISA-75.01)</div>
+            <div class="skill-chip" data-roles="instrumentation">Loop Diagram (ILD)</div>
+            <div class="skill-chip" data-roles="instrumentation">Instrument Datasheet</div>
+            <div class="skill-chip" data-roles="instrumentation">Hook-up Drawing</div>
+            <div class="skill-chip" data-roles="instrumentation,energy">P&ID (ISO 10628)</div>
+            <div class="skill-chip" data-roles="instrumentation">Instrument Index (ISA-5.1)</div>
+            <div class="skill-chip" data-roles="instrumentation">InstruCalc</div>
+            <div class="skill-chip" data-roles="instrumentation">AVEVA Instrumentation</div>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-title">Process Safety & Control</p>
+          <div class="skills-wrap">
+            <div class="skill-chip" data-roles="instrumentation">HAZOP Facilitation</div>
+            <div class="skill-chip" data-roles="instrumentation">SIS Logic Design</div>
+            <div class="skill-chip" data-roles="instrumentation">SIL Verification (IEC 61511)</div>
+            <div class="skill-chip" data-roles="instrumentation">Cause & Effect Matrix</div>
+            <div class="skill-chip" data-roles="instrumentation">LOPA</div>
+            <div class="skill-chip" data-roles="instrumentation">PLC — Ladder Logic (Mitsubishi FX)</div>
+            <div class="skill-chip" data-roles="instrumentation">IEC 61131-3</div>
+            <div class="skill-chip" data-roles="instrumentation">PID Control · Cascade · Feedforward</div>
+            <div class="skill-chip" data-roles="instrumentation">HMI / SCADA</div>
+            <div class="skill-chip" data-roles="instrumentation">Alarm Management</div>
+            <div class="skill-chip" data-roles="instrumentation">HART · Modbus RTU/TCP · Foundation Fieldbus</div>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-title">Machine Learning & Data Science</p>
+          <div class="skills-wrap">
+            <div class="skill-chip" data-roles="ml">Python (Advanced)</div>
+            <div class="skill-chip" data-roles="ml">TensorFlow / Keras</div>
+            <div class="skill-chip" data-roles="ml">PyTorch</div>
+            <div class="skill-chip" data-roles="ml">Scikit-learn</div>
+            <div class="skill-chip" data-roles="ml">CNN / 1D-ResNet</div>
+            <div class="skill-chip" data-roles="ml">AdaBoost / Random Forest</div>
+            <div class="skill-chip" data-roles="ml">Pandas / NumPy</div>
+            <div class="skill-chip" data-roles="ml,instrumentation">Signal Processing (FFT, Filtering)</div>
+            <div class="skill-chip" data-roles="ml">Hyperparameter Tuning</div>
+            <div class="skill-chip" data-roles="ml">Feature Engineering</div>
+            <div class="skill-chip" data-roles="ml">Matplotlib / Seaborn / Plotly</div>
+            <div class="skill-chip" data-roles="ml">Grafana (Real-time dashboards)</div>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-title">Energy & Sustainability</p>
+          <div class="skills-wrap">
+            <div class="skill-chip" data-roles="energy">Energy Auditing</div>
+            <div class="skill-chip" data-roles="energy">Sankey Diagram / Energy Flow Mapping</div>
+            <div class="skill-chip" data-roles="energy">Solar PV Design & Sizing</div>
+            <div class="skill-chip" data-roles="energy">PVsyst</div>
+            <div class="skill-chip" data-roles="energy">Grid-connected & Off-grid PV</div>
+            <div class="skill-chip" data-roles="energy">Battery Storage Integration</div>
+            <div class="skill-chip" data-roles="energy">ISO 50001</div>
+            <div class="skill-chip" data-roles="energy,instrumentation">Thermal System Evaluation</div>
+            <div class="skill-chip" data-roles="energy">Heat Recovery Optimization</div>
+            <div class="skill-chip" data-roles="energy,ml">Energy Forecasting</div>
+            <div class="skill-chip" data-roles="energy">Aspen HYSYS (Basic)</div>
+          </div>
+        </div>
+
+        <div>
+          <p class="skill-group-title">IoT & Embedded Systems</p>
+          <div class="skills-wrap">
+            <div class="skill-chip" data-roles="instrumentation,ml,energy">ESP32 / Arduino</div>
+            <div class="skill-chip" data-roles="instrumentation,ml,energy">MQTT Protocol</div>
+            <div class="skill-chip" data-roles="instrumentation,ml">InfluxDB (Time-series)</div>
+            <div class="skill-chip" data-roles="instrumentation,ml">Node-RED</div>
+            <div class="skill-chip" data-roles="instrumentation,ml,energy">IoT Sensor Integration</div>
+            <div class="skill-chip" data-roles="ml,instrumentation">C++ (Intermediate)</div>
+            <div class="skill-chip" data-roles="instrumentation,ml,energy">Git · Jupyter · Google Colab</div>
+            <div class="skill-chip" data-roles="instrumentation">AutoCAD Plant 3D</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXPERIENCE
+       ============================================================ -->
+  <section id="experience">
+    <div class="section-inner reveal">
+      <div class="sec-head">
+        <div><p class="sec-num">04 — EXPERIENCE</p><h2 class="sec-title">Experience</h2></div>
+      </div>
+
+      <div class="exp-timeline">
+
+        <!-- 1: Renewable Energy Research Assistant -->
+        <div class="exp-item">
+          <div>
+            <div class="exp-period">Oct 2025 — Dec 2025</div>
+            <div class="exp-company">Universitas Gadjah Mada</div>
+          </div>
+          <div>
+            <h3 class="exp-role">Renewable Energy Research Assistant</h3>
+            <div class="exp-bullets">
+              <div class="exp-bullet">Architected end-to-end solar PV aerator system (3.2 kWp) for aquaculture — 12 polycrystalline modules, MPPT charge controller, 4.8 kWh Li battery, 1.5 HP DC motor achieving <strong style="color:var(--text)">98.3% autonomous operation</strong>.</div>
+              <div class="exp-bullet">Deployed IoT monitoring system (ESP32) tracking 7 parameters at 1-min intervals, generating 10,000+ timestamped data points/week for fault detection and analytics.</div>
+              <div class="exp-bullet">Optimized via PVsyst simulation: 15.2 kWh/day generation vs 12.8 kWh/day baseline load, eliminating diesel backup — projected savings <strong style="color:var(--text)">Rp 18–24M/year ($1,200–1,600)</strong>.</div>
+              <div class="exp-bullet">Led commissioning of 3 field technicians: 100% sensor validation, signal integrity testing, resolved 8 installation non-conformities within 2-week timeline.</div>
+              <div class="exp-bullet">Analyzed 6-week operational dataset (4,200+ hours) identifying 5–8% efficiency gains through charge controller tuning; documented in 25-page technical report.</div>
+            </div>
+            <div class="exp-tags">
+              <span class="tag">Solar PV</span><span class="tag">ESP32 / IoT</span>
+              <span class="tag">PVsyst</span><span class="tag">MQTT</span>
+              <span class="tag">InfluxDB</span><span class="tag">Grafana</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2: ML Research Assistant -->
+        <div class="exp-item">
+          <div>
+            <div class="exp-period">Mar 2024 — Mar 2025</div>
+            <div class="exp-company">Universitas Gadjah Mada</div>
+          </div>
+          <div>
+            <h3 class="exp-role">Intelligent & Embedded System Research Assistant</h3>
+            <div class="exp-bullets">
+              <div class="exp-bullet">Architected XRD pattern classification pipeline processing <strong style="color:var(--text)">127,430 simulated spectra</strong> from 850+ polymer CIF files — reducing manual analysis from 2–3 hours to under 5 seconds.</div>
+              <div class="exp-bullet">Engineered custom 1D ResNet-18 deep learning architecture for sequential XRD signal patterns (2θ: 5–80°, 4,096 points/spectrum), achieving <strong style="color:var(--text)">88.4% validation accuracy</strong> across 7 crystal systems.</div>
+              <div class="exp-bullet">Optimized preprocessing (background subtraction, normalization, augmentation) reducing overfitting by 15–18% vs baseline CNN.</div>
+              <div class="exp-bullet">Benchmarked vs SVM, Random Forest, CNN: <strong style="color:var(--text)">12–15% accuracy improvement</strong>, 60% faster inference (4.2s vs 10.5s avg).</div>
+              <div class="exp-bullet">Documented in 60-page undergraduate thesis with ablation studies, error analysis, and reproducibility protocols.</div>
+            </div>
+            <div class="exp-tags">
+              <span class="tag">Python</span><span class="tag">TensorFlow</span>
+              <span class="tag">1D-ResNet</span><span class="tag">Scikit-learn</span>
+              <span class="tag">NumPy / Pandas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3: Energy Engineer Intern -->
+        <div class="exp-item">
+          <div>
+            <div class="exp-period">Jan 2024 — Feb 2024</div>
+            <div class="exp-company">PT Adil Makmur Sentosa</div>
+          </div>
+          <div>
+            <h3 class="exp-role">Energy Engineer Intern</h3>
+            <div class="exp-bullets">
+              <div class="exp-bullet">Led energy audit across 7-unit RDF mini-plant (2.5 tons/day) — analyzed 45 days of operational data to establish baseline and identify improvement targets.</div>
+              <div class="exp-bullet">Mapped energy flows via Sankey diagrams, pinpointing 3 dominant units (boiler feed, shredder, pelletizer) responsible for <strong style="color:var(--text)">73% of ~850 kWh/day</strong> total consumption.</div>
+              <div class="exp-bullet">Identified 12–18% efficiency degradation in heat recovery and 8–12% parasitic losses through systematic equipment benchmarking.</div>
+              <div class="exp-bullet">Delivered 5-point improvement roadmap (heat exchanger retrofit, VFD installation, scheduling optimization, insulation upgrades, PM protocol) with projected savings <strong style="color:var(--text)">Rp 125–180M/year ($8,500–12,000)</strong> and 15–22% energy intensity reduction.</div>
+            </div>
+            <div class="exp-tags">
+              <span class="tag">Energy Audit</span><span class="tag">RDF Plant</span>
+              <span class="tag">Sankey Diagram</span><span class="tag">Heat Recovery</span>
+              <span class="tag">VFD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4: Project Engineer Intern -->
+        <div class="exp-item">
+          <div>
+            <div class="exp-period">Jan 2023 — Jun 2023</div>
+            <div class="exp-company">CV Fortuna Argatech</div>
+          </div>
+          <div>
+            <h3 class="exp-role">Project Engineer / Project Management Intern</h3>
+            <div class="exp-bullets">
+              <div class="exp-bullet">Coordinated end-to-end installation of SPARING wastewater monitoring system for PT Rana Wastu Kencana (Sambas, Kalimantan Barat) — 6-month timeline from site assessment to KLHK regulatory acceptance.</div>
+              <div class="exp-bullet">Managed technical documentation package (installation protocols, calibration records, commissioning reports, operator training materials) ensuring full audit trail compliance.</div>
+              <div class="exp-bullet">Resolved 5+ installation challenges (remote site logistics, sensor calibration, power supply) via systematic troubleshooting; achieved <strong style="color:var(--text)">100% system readiness</strong> at handover.</div>
+              <div class="exp-bullet">Validated 4 critical parameters (pH, TSS, COD, flow rate) and conducted operator training for continuous monitoring reliability.</div>
+            </div>
+            <div class="exp-tags">
+              <span class="tag">SPARING System</span><span class="tag">KLHK Compliance</span>
+              <span class="tag">Wastewater Monitoring</span><span class="tag">Commissioning</span>
+              <span class="tag">pH / TSS / COD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5: Lab Assistant -->
+        <div class="exp-item">
+          <div>
+            <div class="exp-period">Jul 2023 — Dec 2023</div>
+            <div class="exp-company">Universitas Gadjah Mada</div>
+          </div>
+          <div>
+            <h3 class="exp-role">Computational & Multiphysics Laboratory Assistant</h3>
+            <div class="exp-bullets">
+              <div class="exp-bullet">Delivered structured lab sessions for ~40 Engineering Physics students per semester covering computational modeling, numerical analysis, and system dynamics (Python & MATLAB).</div>
+              <div class="exp-bullet">Linked simulation outputs with practical instrumentation and control concepts including sensor response, measurement accuracy, and automated energy system behavior.</div>
+            </div>
+            <div class="exp-tags">
+              <span class="tag">Python</span><span class="tag">MATLAB</span>
+              <span class="tag">Numerical Methods</span><span class="tag">Teaching</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS
+       ============================================================ -->
+  <section id="projects">
+    <div class="section-inner reveal">
+      <div class="sec-head">
+        <div><p class="sec-num">05 — PROJECTS</p><h2 class="sec-title">Key Projects</h2></div>
+      </div>
+
+      <div class="project-tabs">
+        <button class="project-tab active" data-filter="all">All</button>
+        <button class="project-tab" data-filter="instrumentation">Instrumentation</button>
+        <button class="project-tab" data-filter="ml">Applied ML</button>
+        <button class="project-tab" data-filter="energy">Energy Systems</button>
+      </div>
+
+      <div class="projects-grid" id="projectsGrid">
+
+        <!-- PROJECT 1: 1D-ResNet XRD -->
+        <div class="project-card" data-roles="ml">
+          <!--
+            ✏️ THUMBNAIL: Uncomment dan isi dengan path screenshot/gambar:
+            <div class="project-thumb" style="background-image:url('./img/xrd-resnet.png');background-size:cover;background-position:center;"></div>
+          -->
+          <div class="project-thumb">✏️ Add screenshot: XRD classification results / confusion matrix</div>
+          <div class="project-badges"><span class="badge badge-ml">Applied ML</span></div>
+          <h3 class="project-title">Polymer Crystal Classification via 1D-ResNet (Undergraduate Thesis)</h3>
+          <p class="project-desc">
+            End-to-end deep learning pipeline classifying 7 crystal systems from XRD diffraction spectra.
+            Custom 1D ResNet-18 architecture trained on 127,430 simulated spectra from 850+ CIF polymer files
+            (Crystallography Open Database). Reduced manual analysis from hours to seconds.
+          </p>
+          <span class="project-metric">88.4% validation accuracy · 4.2s inference · 0.32 val loss</span>
+          <div class="project-tags">
+            <span class="tag">Python</span><span class="tag">TensorFlow</span>
+            <span class="tag">1D-ResNet</span><span class="tag">XRD</span>
+            <span class="tag">Materials Science</span>
+          </div>
+          <!--
+            ✏️ LINK: Uncomment jika ada link GitHub / paper:
+            <a href="https://github.com/suryonaufal/xrd-resnet" class="project-link" target="_blank">View on GitHub →</a>
+          -->
+          <span class="project-link unavailable">Thesis documentation available on request</span>
+        </div>
+
+        <!-- PROJECT 2: Soft Sensor CO2 -->
+        <div class="project-card" data-roles="ml instrumentation">
+          <div class="project-thumb">✏️ Add screenshot: model prediction vs actual plot / pipeline diagram</div>
+          <div class="project-badges">
+            <span class="badge badge-ml">Applied ML</span>
+            <span class="badge badge-instrumentation">Instrumentation</span>
+          </div>
+          <h3 class="project-title">Soft Sensor for CO₂ Prediction in Gas Processing Unit</h3>
+          <p class="project-desc">
+            Ensemble AdaBoost-Decision Tree soft sensor replacing a 2-hour offline GC cycle with
+            continuous real-time CO₂ inferential measurement. Trained on 18 months of simulated DCS data
+            (240,000+ samples) from a 50 MMSCFD gas sweetening unit. 23 engineered features including
+            thermodynamic calculations, time-lagged variables, and rolling statistics.
+          </p>
+          <span class="project-metric">RMSE: 0.71 mol% (↓18.4% vs baseline) · R² > 0.94</span>
+          <div class="project-tags">
+            <span class="tag">AdaBoost</span><span class="tag">Scikit-learn</span>
+            <span class="tag">Feature Engineering</span><span class="tag">DCS Data</span>
+            <span class="tag">Gas Processing</span>
+          </div>
+          <!--
+            ✏️ LINK: <a href="https://github.com/suryonaufal/..." class="project-link" target="_blank">View on GitHub →</a>
+          -->
+          <span class="project-link unavailable">Academic project — documentation available</span>
+        </div>
+
+        <!-- PROJECT 3: Automation System Design -->
+        <div class="project-card" data-roles="instrumentation">
+          <div class="project-thumb">✏️ Add image: P&ID sheets / ILD sample / HAZOP worksheet snapshot</div>
+          <div class="project-badges"><span class="badge badge-instrumentation">Instrumentation</span></div>
+          <h3 class="project-title">Automation System Design — Refinery Distillation Unit</h3>
+          <p class="project-desc">
+            Complete instrumentation engineering package for a hypothetical refinery distillation unit revamp:
+            15 P&ID sheets, instrument index with 180+ field devices, 45 ILDs, 12-node HAZOP worksheets,
+            and control valve datasheets per ISA-5.1 and ISO 10628.
+          </p>
+          <span class="project-metric">180+ instruments · SIL-2 SIS · 22 control valve calculations</span>
+          <div class="project-tags">
+            <span class="tag">P&ID</span><span class="tag">HAZOP</span>
+            <span class="tag">SIS / IEC 61511</span><span class="tag">LOPA</span>
+            <span class="tag">InstruCalc</span><span class="tag">ISA-5.1</span>
+          </div>
+          <!--
+            ✏️ LINK / FILE: Jika ada PDF report, uncomment:
+            <a href="./docs/automation-design-report.pdf" class="project-link" target="_blank">View Report (PDF) →</a>
+          -->
+          <span class="project-link unavailable">Full documentation available on request</span>
+        </div>
+
+        <!-- PROJECT 4: Solar PV Aerator -->
+        <div class="project-card" data-roles="energy instrumentation">
+          <div class="project-thumb">✏️ Add photo: field installation / Grafana dashboard screenshot</div>
+          <div class="project-badges">
+            <span class="badge badge-energy">Energy Systems</span>
+            <span class="badge badge-instrumentation">Instrumentation</span>
+          </div>
+          <h3 class="project-title">Solar PV Aerator System — Aquaculture Oxygenation</h3>
+          <p class="project-desc">
+            Field-deployed 3.2 kWp solar PV system powering a 1.5 HP DC aerator for aquaculture.
+            Integrated IoT monitoring (ESP32, MQTT, InfluxDB, Grafana) tracking 7 parameters
+            at 1-min intervals. Optimized via PVsyst to achieve 24/7 grid-independent operation.
+          </p>
+          <span class="project-metric">98.3% autonomy · Rp 18–24M/yr savings · 10,000+ data pts/week</span>
+          <div class="project-tags">
+            <span class="tag">Solar PV</span><span class="tag">PVsyst</span>
+            <span class="tag">ESP32</span><span class="tag">MQTT</span>
+            <span class="tag">InfluxDB</span><span class="tag">Grafana</span>
+          </div>
+          <!--
+            ✏️ VIDEO: Jika ada dokumentasi video lapangan, uncomment:
+            <a href="https://youtube.com/watch?v=..." class="project-link" target="_blank">Watch Field Demo →</a>
+          -->
+          <span class="project-link unavailable">Field report & dashboard screenshots available</span>
+        </div>
+
+        <!-- PROJECT 5: IoT Monitoring -->
+        <div class="project-card" data-roles="instrumentation ml">
+          <div class="project-thumb">✏️ Add screenshot: Grafana real-time dashboard / hardware setup</div>
+          <div class="project-badges">
+            <span class="badge badge-instrumentation">Instrumentation</span>
+            <span class="badge badge-ml">Applied ML</span>
+          </div>
+          <h3 class="project-title">IoT-Based Process Instrumentation Monitoring System</h3>
+          <p class="project-desc">
+            Laboratory-scale closed-loop instrumentation system simulating utility process operations
+            (pressure, temperature, flow) with continuous real-time monitoring. ESP32-based DAQ,
+            MQTT communication, InfluxDB storage, and Grafana dashboard with 10+ real-time visualizations
+            including trend analysis and predictive maintenance indicators.
+          </p>
+          <span class="project-metric">500+ sensor streams @ 1 Hz · ±2% full-scale accuracy</span>
+          <div class="project-tags">
+            <span class="tag">ESP32</span><span class="tag">MQTT</span>
+            <span class="tag">InfluxDB</span><span class="tag">Grafana</span>
+            <span class="tag">Predictive Maintenance</span>
+          </div>
+          <!--
+            ✏️ LINK / VIDEO: <a href="..." class="project-link" target="_blank">View Demo →</a>
+          -->
+          <span class="project-link unavailable">Hardware documentation available on request</span>
+        </div>
+
+        <!-- PROJECT 6: RDF Energy Audit -->
+        <div class="project-card" data-roles="energy">
+          <div class="project-thumb">✏️ Add image: Sankey diagram / energy audit report cover</div>
+          <div class="project-badges"><span class="badge badge-energy">Energy Systems</span></div>
+          <h3 class="project-title">RDF Mini-Plant Energy Audit — PT Adil Makmur Sentosa</h3>
+          <p class="project-desc">
+            Comprehensive energy performance audit across 7-unit RDF plant (2.5 tons/day).
+            45-day operational dataset analysis, Sankey energy flow mapping, gap analysis
+            vs theoretical performance, and a 5-point improvement roadmap with full financial
+            projection and ROI estimation for plant management.
+          </p>
+          <span class="project-metric">$8,500–12,000/yr savings · 15–22% energy intensity reduction</span>
+          <div class="project-tags">
+            <span class="tag">Energy Audit</span><span class="tag">Sankey Diagram</span>
+            <span class="tag">RDF Plant</span><span class="tag">Heat Recovery</span>
+            <span class="tag">VFD</span>
+          </div>
+          <!--
+            ✏️ REPORT: <a href="./docs/rdf-energy-audit.pdf" class="project-link" target="_blank">View Executive Summary →</a>
+          -->
+          <span class="project-link unavailable">Confidential — summary available on request</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CERTIFICATIONS
+       ============================================================ -->
+  <section id="certifications">
+    <div class="section-inner reveal">
+      <div class="sec-head">
+        <div><p class="sec-num">06 — CERTIFICATIONS</p><h2 class="sec-title">Certifications</h2></div>
+      </div>
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <div class="cert-icon">⚙️</div>
+          <div>
+            <div class="cert-name">PLC & HMI Training</div>
+            <div class="cert-issuer">KAMALOGIS × INSYS, DTNTF UGM</div>
+            <div class="cert-year">December 2024</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🎛️</div>
+          <div>
+            <div class="cert-name">Instrumentation and PID Control</div>
+            <div class="cert-issuer">Engineering Academy</div>
+            <div class="cert-year">April 2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🔧</div>
+          <div>
+            <div class="cert-name">Programming PLC & HMI Mitsubishi FX Series (Basic)</div>
+            <div class="cert-issuer">Engineering Academy</div>
+            <div class="cert-year">January 2026</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">⚡</div>
+          <div>
+            <div class="cert-name">ISO 50001: Maximizing Energy Efficiency</div>
+            <div class="cert-issuer">Schneider Electric University</div>
+            <div class="cert-year">December 2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🌱</div>
+          <div>
+            <div class="cert-name">Green Economy and Trade</div>
+            <div class="cert-issuer">UN CC:Learn</div>
+            <div class="cert-year">December 2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">💰</div>
+          <div>
+            <div class="cert-name">Carbon Taxation</div>
+            <div class="cert-issuer">UN CC:Learn</div>
+            <div class="cert-year">December 2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">📊</div>
+          <div>
+            <div class="cert-name">Indicators for an Inclusive Green Economy (Advanced)</div>
+            <div class="cert-issuer">UN CC:Learn</div>
+            <div class="cert-year">December 2025</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🐍</div>
+          <div>
+            <div class="cert-name">Getting Started with Python Programming</div>
+            <div class="cert-issuer">Dicoding Indonesia</div>
+            <div class="cert-year">March 2025 · MEPJQOM1JX3V</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🤖</div>
+          <div>
+            <div class="cert-name">Learning Basic AI</div>
+            <div class="cert-issuer">Dicoding Indonesia</div>
+            <div class="cert-year">February 2025 · 6RPNRGY0RX2M</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">📈</div>
+          <div>
+            <div class="cert-name">Learning Basic Data Visualization</div>
+            <div class="cert-issuer">Dicoding Indonesia</div>
+            <div class="cert-year">February 2025 · 0LZ0R53V0P65</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🌿</div>
+          <div>
+            <div class="cert-name">Professional Energy Manager</div>
+            <div class="cert-issuer">Schneider Electric University</div>
+            <div class="cert-year">In Progress</div>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="cert-icon">🔄</div>
+          <div>
+            <div class="cert-name">Reshaping our Economies</div>
+            <div class="cert-issuer">UN CC:Learn</div>
+            <div class="cert-year">December 2025</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT
+       ============================================================ -->
+  <section id="contact">
+    <div class="section-inner reveal">
+      <div class="sec-head">
+        <div><p class="sec-num">07 — CONTACT</p><h2 class="sec-title">Get in Touch</h2></div>
+      </div>
+      <div class="contact-wrap">
+        <div>
+          <h2 class="contact-headline">
+            Let's build<br/>something<br/><span class="acc">meaningful.</span>
+          </h2>
+          <p class="contact-sub">
+            Open to full-time opportunities, research collaborations, and project-based
+            work in Instrumentation & Control, Applied Machine Learning, and Energy Systems.
+            Based in Jakarta — open to relocation and remote work globally.
+          </p>
+          <a href="mailto:suryonaufal.official@gmail.com" class="contact-email">
+            suryonaufal.official@gmail.com
+          </a>
+          <span class="contact-phone">+62 858-2466-5742</span>
+        </div>
+
+        <div class="social-list">
+          <a href="https://linkedin.com/in/naufal-suryo" class="social-item" target="_blank">
+            <div>
+              <div class="social-name">LinkedIn</div>
+              <div class="social-handle">linkedin.com/in/naufal-suryo</div>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+          <a href="https://github.com/suryonaufal" class="social-item" target="_blank">
+            <div>
+              <div class="social-name">GitHub</div>
+              <div class="social-handle">github.com/suryonaufal</div>
+            </div>
+            <span class="social-arrow">→</span>
+          </a>
+          <!--
+            ✏️ Tambah / uncomment jika ada Google Scholar atau ResearchGate:
+            <a href="https://scholar.google.com/citations?user=..." class="social-item" target="_blank">
+              <div>
+                <div class="social-name">Google Scholar</div>
+                <div class="social-handle">Publications & Research</div>
+              </div>
+              <span class="social-arrow">→</span>
+            </a>
+          -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span class="footer-mono">© 2026 <span class="footer-accent">Naufal Suryo Saputro</span> · Engineering Physics, Universitas Gadjah Mada</span>
+    <span class="footer-mono">Built with precision.</span>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       ============================================================ -->
+  <script>
+    const roleLabels = {
+      instrumentation: 'Instrumentation & Control',
+      ml:              'Applied ML',
+      energy:          'Energy Systems',
+    };
+
+    let activeRole = 'instrumentation';
+    let isLight = false;
+
+    // ============================================================
+    // THEME TOGGLE
+    // ============================================================
+    const themeBtn = document.getElementById('themeToggle');
+
+    function setTheme(light) {
+      isLight = light;
+      if (light) {
+        document.body.classList.add('light');
+      } else {
+        document.body.classList.remove('light');
+      }
+      localStorage.setItem('theme', light ? 'light' : 'dark');
+    }
+
+    themeBtn.addEventListener('click', () => setTheme(!isLight));
+
+    // Restore from localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') setTheme(true);
+
+    function setRole(role) {
+      activeRole = role;
+      // Preserve light class when switching roles
+      const classes = ['role-instrumentation','role-ml','role-energy'];
+      classes.forEach(c => document.body.classList.remove(c));
+      document.body.classList.add(`role-${role}`);
+      document.querySelectorAll('.role-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.role === role));
+      document.querySelectorAll('.hero-tagline').forEach(el => {
+        el.classList.remove('visible');
+        if (el.dataset.role === role) el.classList.add('visible');
+      });
+      document.querySelectorAll('.pill').forEach(el => {
+        const roles = (el.dataset.roles || '').split(',');
+        el.classList.toggle('role-highlight', roles.includes(role));
+      });
+      document.querySelectorAll('.skill-chip').forEach(el => {
+        const roles = (el.dataset.roles || '').split(',');
+        const hit = roles.includes(role);
+        el.classList.toggle('role-highlight', hit);
+        el.classList.toggle('role-dimmed', !hit);
+      });
+      const lbl = document.getElementById('activeRoleLabel');
+      if (lbl) lbl.textContent = roleLabels[role];
+      setProjectFilter(role);
+    }
+
+    function setProjectFilter(filter) {
+      document.querySelectorAll('.project-tab').forEach(t =>
+        t.classList.toggle('active', t.dataset.filter === filter));
+      document.querySelectorAll('.project-card').forEach(card => {
+        const roles = (card.dataset.roles || '').split(' ');
+        const show = filter === 'all' || roles.includes(filter);
+        card.classList.toggle('hidden', !show);
+        card.classList.toggle('role-featured', show && filter !== 'all' && roles.includes(filter));
+      });
+    }
+
+    document.querySelectorAll('.role-btn').forEach(b =>
+      b.addEventListener('click', () => setRole(b.dataset.role)));
+    document.querySelectorAll('.project-tab').forEach(t =>
+      t.addEventListener('click', () => {
+        const f = t.dataset.filter;
+        setProjectFilter(f);
+        if (f !== 'all') setRole(f);
+      }));
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    setRole('instrumentation');
+  </script>
+
+</body>
+</html>
